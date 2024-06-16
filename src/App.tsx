@@ -1,23 +1,19 @@
 import './App.css'
+import TaskCard from "./task_card"
+import { Task } from "./data_task"
 
 function App() {
-  const title = 'TITLE'
-  const id = "cp-1"
-  const urgency = "Urgent"
-  const desc = "To do by tomorrow"
+  const task:Task = {
+    title : 'Market Research',
+    id: 'CP-1',
+    urgency: true,
+    desc: 'Prepare a Market Research on Advedutech'
+  }
+
   return (
-    <div className="border rounded-lg px-2 m-2 bg-gray-50">
-      <div className='text-base font-semibold py-2'>
-        {title}
-      </div>
-      <div className="text-xs">
-        {desc}
-      </div>
-      <div className='text-xs flex justify-between py-2 text-gray-500'>
-        <div>{id}</div>
-        <div>{urgency}</div> 
-      </div>
-    </div>
+    <>
+      <TaskCard task={task}/>
+    </>
   )
 }
 
