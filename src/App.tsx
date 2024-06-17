@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import TaskCard from "./components/TaskCard";
-import { statuses, tasks as initialTasks, Task, Status } from "./utils/data_task";
+import { statuses, Task, Status } from "./utils/data_task";
 
 function App() {
   // Initialize the state with the predefined tasks
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const columns = statuses.map((status) => {
     const tasksInColumn = tasks.filter((task) => task.status === status);
@@ -15,7 +15,23 @@ function App() {
     };
   });
 
+  useEffect(() => {
+    fetch('http://localhost:3000/tasks')
+      .then((res) => res.json())
+      .then((data) => {
+        setTasks(data);
+      });
+  }, []);
+  
+
   const updateTask = (task: Task) => {
+    fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
     const updatedTasks = tasks.map((t) => {
       return t.id === task.id ? task : t
     })
