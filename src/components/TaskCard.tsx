@@ -5,7 +5,7 @@ const TaskCard = ({ task }: {
 }) => {
   return (
     <div className="border rounded-lg px-2 m-2 bg-gray-50">
-      <div className='text-base font-semibold py-2'>
+      <div className='text-base font-base py-2'>
         {task.title}
       </div>
       <div className="text-xs">
