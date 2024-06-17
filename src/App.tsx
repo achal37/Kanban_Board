@@ -1,15 +1,26 @@
-import './App.css'
-import TaskCard from "./components/TaskCard"
-import { statuses, tasks } from "./utils/data_task"
+import { useState } from 'react';
+import './App.css';
+import TaskCard from "./components/TaskCard";
+import { statuses, tasks as initialTasks, Task } from "./utils/data_task";
 
 function App() {
+  // Initialize the state with the predefined tasks
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+
   const columns = statuses.map((status) => {
-    const tasksInColumn = tasks.filter((task) => task.status === status)
+    const tasksInColumn = tasks.filter((task) => task.status === status);
     return {
       title: status,
-      tasks: tasksInColumn
-    }
-  })
+      tasks: tasksInColumn,
+    };
+  });
+
+  const updateTask = (task: Task) => {
+    const updatedTasks = tasks.map((t) => {
+      return t.id === task.id ? task : t
+    })
+    setTasks(updatedTasks)
+  }
 
   return (
     <>
@@ -17,12 +28,17 @@ function App() {
         {columns.map((column) => (
           <div className='w-1/3 px-2' key={column.title}>
             <h1 className='text-2xl capitalize p-2 font-bold text-gray-600'>{column.title}</h1>
-            {column.tasks.map((task) => <TaskCard task={task} key={task.id} />)}
+            {column.tasks.map((task) => (
+              <TaskCard
+                task={task}
+                updateTask={updateTask}
+              />
+            ))}
           </div>
         ))}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
