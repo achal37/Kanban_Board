@@ -1,7 +1,7 @@
 // TaskCard.tsx
 
 import React, { useState } from 'react';
-import { Task, Priority } from '../utils/data_task';
+import { Task } from '../../utils/data_task';
 
 const LowIcon = (
   <svg

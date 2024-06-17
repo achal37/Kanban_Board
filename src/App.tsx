@@ -1,9 +1,10 @@
-// App.tsx
-
 import { useEffect, useState } from 'react';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import db from '../db.json';
 import './App.css';
-import TaskCard from './components/TaskCard';
-import AddTask from './components/AddTask';
+import TaskCard from './components/Kanban/TaskCard';
+import AddTask from './components/Kanban/AddTask';
 import { statuses, Task, Status, Priority } from './utils/data_task';
 
 const AddTaskIcon = (
@@ -25,6 +26,25 @@ const AddTaskIcon = (
     />
   </svg>
 );
+
+const BoardIcon = (
+  <svg
+    className="w-10 h-10 text-blue-300"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    fill="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fillRule="evenodd"
+      d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
 
 function App() {
   // Initialize the state with the predefined tasks
@@ -124,9 +144,43 @@ function App() {
     setCurrentHover(status);
   };
 
+const downloadTasksAsPdf = () => {
+  const doc = new jsPDF();
+  const tableColumn = ['ID', 'Title', 'Description', 'Status', 'Priority'];
+  const tableRows: string[][] = [];
+
+  db.tasks.forEach((task) => {
+    const taskData = [
+      task.id,
+      task.title,
+      task.desc,
+      task.status,
+      task.priority,
+    ];
+    tableRows.push(taskData);
+  });
+
+  (doc  as any).autoTable({
+    head: [tableColumn],
+    body: tableRows,
+  });
+
+  doc.save('kanban_tasks.pdf');
+};
+
+  
+  
   return (
-    <div className='my-4 mx-2'>
-      <h1 className='text-4xl m-2 px-1 font-bold'>Kanban Board</h1>
+    <div className="my-4 mx-2">
+      <h1 className='flex text-4xl m-2 px-1 font-bold'>
+        Kanban Board {BoardIcon}
+        <button
+          className="ml-auto px-4 text-xs py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={downloadTasksAsPdf}
+        >
+          Download Tasks as PDF
+        </button>
+      </h1>
       <div className="grid grid-cols-3 gap-4">
         {columns.map((column) => (
           <div
@@ -134,7 +188,7 @@ function App() {
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={() => handleDragEnter(column.status)}
             key={column.status}
-            className="relative" // Added relative positioning to the column container
+            className="relative"
           >
             <div className="border rounded-lg">
               <div className="flex items-center justify-between p-2">

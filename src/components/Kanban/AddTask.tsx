@@ -1,7 +1,7 @@
 // AddTask.tsx
 
 import React, { useState } from 'react';
-import { Status, Priority } from '../utils/data_task';
+import { Status, Priority } from '../../utils/data_task';
 
 interface AddTaskProps {
   addTask: (status: Status, title: string, desc: string, priority: Priority) => void;

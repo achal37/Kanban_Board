@@ -1,30 +1,63 @@
-# React + TypeScript + Vite
+# Kanban Board Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a Kanban board application built with React and TypeScript. It allows users to manage tasks by adding, updating, and deleting them. Users can also export the tasks as a PDF file. The application uses `jsPDF` and `jspdf-autotable` for PDF generation and simulates backend operations with a local JSON file.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Task Management:** Add, update, and delete tasks.
+- **Drag and Drop:** Drag tasks between different status columns.
+- **PDF Export:** Export tasks as a PDF file with a table format.
+- **TypeScript:** Ensures type safety and better development experience.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+    ```sh
+    git clone https://github.com/yourusername/kanban-project.git
+    cd kanban-project
+    ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install the dependencies:
+
+    ```sh
+    npm install
+    ```
+
+3. Start the development server:
+
+    ```sh
+    npm run dev
+    ```
+
+4. The application will be available at `http://localhost:3000`.
+
+## Usage
+
+- **Add Task:** Click on the "Add Task" button in any column to add a new task to that column.
+- **Update Task:** Click on a task to edit its details and update its status.
+- **Delete Task:** Click on the delete button on a task to remove it.
+- **Drag and Drop:** Drag tasks between different columns to change their status.
+- **Export as PDF:** Click on the "Download Tasks as PDF" button to export all tasks as a PDF file.
+
+## Folder Structure
+
+```plaintext
+kanban-project/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Kanban/
+│   │   │   ├── AddTask.tsx
+│   │   │   └── TaskCard.tsx
+│   ├── utils/
+│   │   └── data_task.ts
+│   ├── App.tsx
+│   ├── App.css
+│   ├── index.tsx
+│   └── db.json
+├── package.json
+├── tsconfig.json
+└── README.md
