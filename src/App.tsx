@@ -126,6 +126,7 @@ function App() {
 
   return (
     <div className='my-4 mx-2'>
+      <h1 className='text-4xl m-2 px-1 font-bold'>Kanban Board</h1>
       <div className="grid grid-cols-3 gap-4">
         {columns.map((column) => (
           <div
@@ -133,10 +134,11 @@ function App() {
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={() => handleDragEnter(column.status)}
             key={column.status}
+            className="relative" // Added relative positioning to the column container
           >
-            <div className="border rounded-lg p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h1 className="text-xl capitalize font-bold text-gray-600">{column.status}</h1>
+            <div className="border rounded-lg">
+              <div className="flex items-center justify-between p-2">
+                <h1 className="text-xl capitalize font-bold text-gray-800">{column.status}</h1>
                 <button
                   className="text-green-500 p-2 flex gap-2"
                   onClick={() => {
