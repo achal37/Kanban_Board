@@ -20,7 +20,13 @@ const TaskCard = ({ task, updateTask }: {
   const [isEditTitle, setIsEditTitle] = useState(false)
   const [isEditDesc, setIsEditDesc] = useState(false)
   return (
-    <div className="border rounded-lg px-2 m-2 bg-gray-50">
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("id", task.id)
+      }}
+      className="border rounded-lg px-2 m-2 bg-gray-50"
+    >
       <div className='text-base font-base py-2'>
         {isEditTitle ? (
           <input

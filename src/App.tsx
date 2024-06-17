@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import TaskCard from "./components/TaskCard";
-import { statuses, tasks as initialTasks, Task } from "./utils/data_task";
+import { statuses, tasks as initialTasks, Task, Status } from "./utils/data_task";
 
 function App() {
   // Initialize the state with the predefined tasks
@@ -22,11 +22,25 @@ function App() {
     setTasks(updatedTasks)
   }
 
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, status: Status) => {
+    e.preventDefault()
+    const id = e.dataTransfer.getData("id")
+    const task = tasks.find((task) => task.id ===id)
+    if(task){
+      updateTask({...task, status})
+    }
+  }
+
   return (
     <>
       <div className='flex divide-x'>
         {columns.map((column) => (
-          <div className='w-1/3 px-2' key={column.title}>
+          <div 
+          onDrop = {(e) => handleDrop(e, column.title)}
+          onDragOver={(e) => e.preventDefault()} 
+          className='w-1/3 px-2' 
+          key={column.title}
+          >
             <h1 className='text-2xl capitalize p-2 font-bold text-gray-600'>{column.title}</h1>
             {column.tasks.map((task) => (
               <TaskCard
